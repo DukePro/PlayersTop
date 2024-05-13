@@ -13,14 +13,15 @@ namespace PlayersTop
 
     class Menu
     {
-        private const string ShowAllCommand = "1";
-        private const string LevelSortCommand = "2";
-        private const string PowerSortCommand = "3";
-        private const string Exit = "0";
-
         public void Run()
         {
+            const string ShowAllCommand = "1";
+            const string LevelSortCommand = "2";
+            const string PowerSortCommand = "3";
+            const string Exit = "0";
+
             string userInput;
+            int topAmmount = 3;
             bool isExit = false;
 
             Database database = new Database();
@@ -43,11 +44,11 @@ namespace PlayersTop
                         break;
 
                     case LevelSortCommand:
-                        database.ShowTop3Level();
+                        database.ShowTopLevel(topAmmount);
                         break;
 
                     case PowerSortCommand:
-                        database.ShowTop3Power();
+                        database.ShowTopPower(topAmmount);
                         break;
 
                     case Exit:
@@ -90,20 +91,20 @@ namespace PlayersTop
             }
         }
 
-        public void ShowTop3Level()
+        public void ShowTopLevel(int ammount)
         {
             WriteLine("Топ игроков по уровню");
 
-            var playersByLevel = _players.OrderByDescending(player => player.Level).Take(3).ToList();
+            var playersByLevel = _players.OrderByDescending(player => player.Level).Take(ammount).ToList();
 
             ShowPlayers(playersByLevel);
         }
 
-        public void ShowTop3Power()
+        public void ShowTopPower(int ammount)
         {
             WriteLine("Топ игроков по силе");
 
-            var playersByPower = _players.OrderByDescending(player => player.Power ).Take(3).ToList();
+            var playersByPower = _players.OrderByDescending(player => player.Power ).Take(ammount).ToList();
 
             ShowPlayers(playersByPower);
         }
